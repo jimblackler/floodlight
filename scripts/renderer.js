@@ -1,3 +1,12 @@
+const DRAW_DECISION_POINTS = false;
+const DRAW_CORNER_VERTICES = false;
+const DRAW_ORIGINAL_BLOCKS = false;
+const DRAW_SHADOWS = true;
+const DRAW_GRID = true;
+const DRAW_TRACED_BODIES = true;
+const DRAW_LIGHT_ORIGIN = true;
+const DRAW_RECEPTORS = true;
+
 const Renderer = function (gameDiv, size) {
   this.GRID_SIZE = size == null ? 32 : size;
   this.canvas = document.createElement('canvas');
@@ -34,7 +43,7 @@ Renderer.prototype.render = function (gameState) {
 
   let ctx = this.canvas.getContext('2d');
 
-  if (true) { // draw traced bodies
+  if (DRAW_TRACED_BODIES) {
     if (!this.bodiesImage) {
       this.bodiesImage = document.createElement('canvas');
       this.bodiesImage.width = width * this.GRID_SIZE;
@@ -46,7 +55,7 @@ Renderer.prototype.render = function (gameState) {
       ctx.fillStyle = 'rgba(0, 32, 0, 1)';
       ctx.fillRect(0, 0, width, height);
 
-      if (true) { // Draw fancy grid
+      if (DRAW_GRID) { // Draw fancy grid
         ctx.beginPath();
         for (let y = 0; y !== height; y++) {
           ctx.moveTo(0, y);
@@ -84,7 +93,7 @@ Renderer.prototype.render = function (gameState) {
 
       }
 
-      if (true) {
+      if (DRAW_SHADOWS) {
         ctx.save();
         ctx.shadowColor = 'black';
         ctx.shadowBlur = 20;
@@ -108,7 +117,7 @@ Renderer.prototype.render = function (gameState) {
 
   ctx.scale(this.GRID_SIZE, this.GRID_SIZE);
 
-  if (false) { // draw original blocks
+  if (DRAW_ORIGINAL_BLOCKS) {
     ctx.fillStyle = 'rgba(100,120,100,0.5)';
 
     let node = 0;
@@ -122,7 +131,7 @@ Renderer.prototype.render = function (gameState) {
     }
   }
 
-  if (false) { // draw corner vertices
+  if (DRAW_CORNER_VERTICES) {
     ctx.fillStyle = 'rgba(0,128,0,0.9)';
 
     const bodies = gameState.getBodies().getBodyArray();
@@ -142,7 +151,7 @@ Renderer.prototype.render = function (gameState) {
   if (lightPosition) {
     const data = RayCaster.getDecisionPoints(lightPosition);
 
-    if (false) { // visualize decision points in original order
+    if (DRAW_DECISION_POINTS) {
       ctx.lineWidth = 0.25;
       for (let idx = 0; idx !== data.decisionPoints.length; idx++) {
         const decisionPoint = data.decisionPoints[idx];
@@ -177,7 +186,8 @@ Renderer.prototype.render = function (gameState) {
   const renderFeedback = {
     receptorSuccess: []
   };
-  if (true) { // show receptors
+
+  if (DRAW_RECEPTORS) {
     if (!this.sprites) {
       this.sprites = new Image();
       this.sprites.src = 'sprites.png';
@@ -207,7 +217,7 @@ Renderer.prototype.render = function (gameState) {
     }
   }
 
-  if (true) { // show light origin
+  if (DRAW_LIGHT_ORIGIN) {
     const lightPosition = gameState.getLightPosition();
     if (lightPosition) {
       ctx.fillStyle = 'rgba(0,128,128,0.9)';

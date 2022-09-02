@@ -103,27 +103,28 @@ GameState.prototype.generateReceptors = function () {
       while (true) {
         const x = Math.floor(random() * this.width) + .5;
         const y = Math.floor(random() * this.height) + .5;
-        if (!this.isBlockedXY(Math.floor(x), Math.floor(y))) {
-          let valid = true;
-          const light = (count !== 0);
-          for (let idx = 0; idx !== receptors.length; idx++) {
-            const other = receptors[idx];
-            if (light === other.light) {
-              const distance = (x - other.x) * (x - other.x) + (y - other.y) * (y - other.y);
-              if (distance < minDistance * minDistance) {
-                valid = false;
-                break;
-              }
+        if (this.isBlockedXY(Math.floor(x), Math.floor(y))) {
+          continue;
+        }
+        let valid = true;
+        const light = (count !== 0);
+        for (let idx = 0; idx !== receptors.length; idx++) {
+          const other = receptors[idx];
+          if (light === other.light) {
+            const distance = (x - other.x) * (x - other.x) + (y - other.y) * (y - other.y);
+            if (distance < minDistance * minDistance) {
+              valid = false;
+              break;
             }
           }
-          if (valid) {
-            receptors.push({
-              x: x,
-              y: y,
-              light: light
-            });
-            break;
-          }
+        }
+        if (valid) {
+          receptors.push({
+            x: x,
+            y: y,
+            light: light
+          });
+          break;
         }
       }
     }

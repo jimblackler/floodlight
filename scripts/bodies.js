@@ -17,6 +17,7 @@ const Bodies = function (gameState) {
       let y = iy;
       let px = null;
       let py = null;
+      let dx = null;
       let dy = null;
       do {
         done[x + '/' + y] = true;

@@ -5,7 +5,7 @@ function Mash() {
 
   var mash = function (data) {
     data = data.toString();
-    for (var i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       n += data.charCodeAt(i);
       var h = 0.02519603282416938 * n;
       n = h >>> 0;
@@ -40,7 +40,7 @@ function Alea() {
     s1 = mash(' ');
     s2 = mash(' ');
 
-    for (var i = 0; i < args.length; i++) {
+    for (let i = 0; i < args.length; i++) {
       s0 -= mash(args[i]);
       if (s0 < 0) {
         s0 += 1;

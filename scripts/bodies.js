@@ -4,8 +4,8 @@ var Bodies = function (gameState) {
   var height = gameState.getHeight();
   this.bodyArray = [];
 
-  for (var iy = 0; iy !== height + 1; iy++) {
-    for (var ix = 0; ix !== width + 1; ix++) {
+  for (let iy = 0; iy !== height + 1; iy++) {
+    for (let ix = 0; ix !== width + 1; ix++) {
       if (!done[ix + "/" + iy]) {
         {
           var body = {

@@ -14,7 +14,7 @@ var RayCaster = {
 
     var sequence = 0;
     var bodies = gameState.getBodies().getBodyArray();
-    for (var idx = 0; idx !== bodies.length; idx++) {
+    for (let idx = 0; idx !== bodies.length; idx++) {
       var body = bodies[idx];
       var points = body.points;
       var pointData = {
@@ -125,7 +125,7 @@ var RayCaster = {
 
       var activeDecisionPoint = closestDecisionPoint;
 
-      for (var idx = 0; idx !== data.decisionPoints.length; idx++) {
+      for (let idx = 0; idx !== data.decisionPoints.length; idx++) {
         var decisionPoint = data.decisionPoints[idx];
         delete data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.idx];
         if (decisionPoint.mode !== RayCaster.Modes.ENDS) {

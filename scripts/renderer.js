@@ -126,10 +126,10 @@ Renderer.prototype.render = function (gameState) {
     ctx.fillStyle = 'rgba(0,128,0,0.9)';
 
     const bodies = gameState.getBodies().getBodyArray();
-    for (let idx = 0; idx != bodies.length; idx++) {
+    for (let idx = 0; idx !== bodies.length; idx++) {
       const body = bodies[idx];
       const points = body.points;
-      for (let idx2 = 0; idx2 != points.length; idx2++) {
+      for (let idx2 = 0; idx2 !== points.length; idx2++) {
         ctx.beginPath();
         ctx.arc(points[idx2].x, points[idx2].y, 0.15, 0, Math.PI * 2);
         ctx.fill();

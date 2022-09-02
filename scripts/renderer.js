@@ -110,9 +110,7 @@ Renderer.prototype.render = function (gameState) {
       // Restore context
       ctx = this.canvas.getContext('2d');
     }
-
     ctx.drawImage(this.bodiesImage, 0, 0);
-
   }
 
   ctx.scale(this.GRID_SIZE, this.GRID_SIZE);

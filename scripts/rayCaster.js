@@ -108,7 +108,7 @@ const RayCaster = {
     let closestDecisionPoint = null;
     let closestPosition;
     let closestDistance = Number.MAX_VALUE;
-    for (idx0 in data.liveDecisionPoints) {
+    for (let idx0 in data.liveDecisionPoints) {
       const candidateDecisionPoint = data.liveDecisionPoints[idx0];
       const collisionPoint =
           RayCaster.getCollisionPoint(candidateDecisionPoint, lightPosition, Math.PI);
@@ -168,7 +168,7 @@ const RayCaster = {
             let closestDecisionPoint = null;
             let closestPosition;
             let closestDistance = Number.MAX_VALUE;
-            for (idx0 in data.liveDecisionPoints) {
+            for (let idx0 in data.liveDecisionPoints) {
               const candidateDecisionPoint = data.liveDecisionPoints[idx0];
               const collisionPoint = RayCaster.getCollisionPoint(candidateDecisionPoint,
                   lightPosition, decisionPoint.angle);

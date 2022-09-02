@@ -96,7 +96,7 @@ const RayCaster = {
 
     data.decisionPoints.sort(function (a, b) {
       let result = b.angle - a.angle;
-      if (result == 0) {
+      if (result === 0) {
         result = a.mode - b.mode;
       }
       return result;
@@ -105,16 +105,16 @@ const RayCaster = {
     ctx.beginPath();
 
     // Find nearest.
-    var closestDecisionPoint = null;
-    var closestPosition;
-    var closestDistance = Number.MAX_VALUE;
+    let closestDecisionPoint = null;
+    let closestPosition;
+    let closestDistance = Number.MAX_VALUE;
     for (idx0 in data.liveDecisionPoints) {
-      var candidateDecisionPoint = data.liveDecisionPoints[idx0];
-      var collisionPoint = RayCaster.getCollisionPoint(candidateDecisionPoint, lightPosition,
-          Math.PI);
-      var dx0 = collisionPoint.x - lightPosition.x;
-      var dy0 = collisionPoint.y - lightPosition.y;
-      var distance = dx0 * dx0 + dy0 * dy0;
+      const candidateDecisionPoint = data.liveDecisionPoints[idx0];
+      const collisionPoint =
+          RayCaster.getCollisionPoint(candidateDecisionPoint, lightPosition, Math.PI);
+      const dx0 = collisionPoint.x - lightPosition.x;
+      const dy0 = collisionPoint.y - lightPosition.y;
+      const distance = dx0 * dx0 + dy0 * dy0;
       if (distance < closestDistance) {
         closestDistance = distance;
         closestDecisionPoint = candidateDecisionPoint;
@@ -129,20 +129,23 @@ const RayCaster = {
         const decisionPoint = data.decisionPoints[idx];
         delete data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.idx];
         if (decisionPoint.mode !== RayCaster.Modes.ENDS) {
-          data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.nextIdx] = decisionPoint;
+          data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.nextIdx] =
+              decisionPoint;
         }
         if (decisionPoint.mode === RayCaster.Modes.STARTS) {
           // Should hook on to new start point?
-          var body = decisionPoint.body;
-          var bodyPoints = body.points;
+          const body = decisionPoint.body;
+          const bodyPoints = body.points;
           const position = bodyPoints[decisionPoint.idx];
-          var dx0 = position.x - lightPosition.x;
-          var dy0 = position.y - lightPosition.y;
-          const candidateDistance = dx0 * dx0 + dy0 * dy0;
+
+          const dx0a = position.x - lightPosition.x;
+          const dy0a = position.y - lightPosition.y;
+          const candidateDistance = dx0a * dx0a + dy0a * dy0a;
+
           const currentPosition = RayCaster.getCollisionPoint(activeDecisionPoint, lightPosition,
               decisionPoint.angle);
-          var dx0 = currentPosition.x - lightPosition.x;
-          var dy0 = currentPosition.y - lightPosition.y;
+          const dx0 = currentPosition.x - lightPosition.x;
+          const dy0 = currentPosition.y - lightPosition.y;
           const currentDistance = dx0 * dx0 + dy0 * dy0;
           if (candidateDistance <= currentDistance) {
             ctx.lineTo(currentPosition.x, currentPosition.y);
@@ -155,24 +158,23 @@ const RayCaster = {
         if (activeDecisionPoint != null && activeDecisionPoint.sequence === decisionPoint.sequence
             && activeDecisionPoint.nextIdx === decisionPoint.idx) {
           activeDecisionPoint = decisionPoint;
-          var body = decisionPoint.body;
-          var bodyPoints = body.points;
+          const body = decisionPoint.body;
+          const bodyPoints = body.points;
           const point = bodyPoints[decisionPoint.idx];
           ctx.lineTo(point.x, point.y);
 
           if (decisionPoint.mode === RayCaster.Modes.ENDS) {
-
             // Loose scanner .. hook on to nearest.
-            var closestDecisionPoint = null;
-            var closestPosition;
-            var closestDistance = Number.MAX_VALUE;
+            let closestDecisionPoint = null;
+            let closestPosition;
+            let closestDistance = Number.MAX_VALUE;
             for (idx0 in data.liveDecisionPoints) {
-              var candidateDecisionPoint = data.liveDecisionPoints[idx0];
-              var collisionPoint = RayCaster.getCollisionPoint(candidateDecisionPoint,
+              const candidateDecisionPoint = data.liveDecisionPoints[idx0];
+              const collisionPoint = RayCaster.getCollisionPoint(candidateDecisionPoint,
                   lightPosition, decisionPoint.angle);
-              var dx0 = collisionPoint.x - lightPosition.x;
-              var dy0 = collisionPoint.y - lightPosition.y;
-              var distance = dx0 * dx0 + dy0 * dy0;
+              const dx0 = collisionPoint.x - lightPosition.x;
+              const dy0 = collisionPoint.y - lightPosition.y;
+              const distance = dx0 * dx0 + dy0 * dy0;
               if (distance < closestDistance) {
                 closestDistance = distance;
                 closestDecisionPoint = candidateDecisionPoint;

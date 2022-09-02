@@ -37,7 +37,7 @@ GameState.prototype.generateWalls = function (seed) {
       for (let attempts = 0; attempts !== 4; attempts++) {
         x = Math.floor(random() * this.width / 3) * 3;
         y = Math.floor(random() * this.height / 3) * 3;
-        var node = outer.getNode(x, y);
+        const node = outer.getNode(x, y);
         if (outer.grid[node]) {
           break;
         }
@@ -61,7 +61,7 @@ GameState.prototype.generateWalls = function (seed) {
       }
       let length = Math.floor(random() * 2 + 1) * 3;
       while (length--) {
-        var node = outer.getNode(x, y);
+        const node = outer.getNode(x, y);
         if (node == null) {
           break;
         }
@@ -101,11 +101,11 @@ GameState.prototype.generateReceptors = function () {
     const receptors = [];
     for (let count = 0; count < 5; count++) {
       while (true) {
-        var x = Math.floor(random() * this.width) + .5;
-        var y = Math.floor(random() * this.height) + .5;
+        const x = Math.floor(random() * this.width) + .5;
+        const y = Math.floor(random() * this.height) + .5;
         if (!this.isBlockedXY(Math.floor(x), Math.floor(y))) {
           let valid = true;
-          var light = (count !== 0);
+          const light = (count !== 0);
           for (let idx = 0; idx !== receptors.length; idx++) {
             const other = receptors[idx];
             if (light === other.light) {
@@ -143,7 +143,7 @@ GameState.prototype.generateReceptors = function () {
           for (let idx = 0; idx !== receptors.length; idx++) {
             const receptor = receptors[idx];
 
-            var light = receptor.light;
+            const light = receptor.light;
             const inPath = ctx.isPointInPath(receptor.x, receptor.y);
             const receptorSuccess = (inPath === light);
             if (!receptorSuccess) {

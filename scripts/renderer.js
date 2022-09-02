@@ -61,14 +61,14 @@ Renderer.prototype.render = function (gameState) {
         ctx.stroke();
       }
 
-      var bodies = gameState.getBodies().getBodyArray();
+      const bodies = gameState.getBodies().getBodyArray();
       ctx.beginPath();
       for (let idx = 0; idx !== bodies.length; idx++) {
-        var body = bodies[idx];
-        var points = body.points;
+        const body = bodies[idx];
+        const points = body.points;
 
         for (let idx2 = 0; idx2 !== points.length; idx2++) {
-          var point = points[idx2];
+          const point = points[idx2];
           if (idx2 === 0)
             ctx.moveTo(point.x, point.y);
           else
@@ -125,10 +125,10 @@ Renderer.prototype.render = function (gameState) {
   if (false) { // draw corner vertices
     ctx.fillStyle = "rgba(0,128,0,0.9)";
 
-    var bodies = gameState.getBodies().getBodyArray();
+    const bodies = gameState.getBodies().getBodyArray();
     for (let idx = 0; idx != bodies.length; idx++) {
-      var body = bodies[idx];
-      var points = body.points;
+      const body = bodies[idx];
+      const points = body.points;
       for (let idx2 = 0; idx2 != points.length; idx2++) {
         ctx.beginPath();
         ctx.arc(points[idx2].x, points[idx2].y, 0.15, 0, Math.PI * 2);
@@ -138,7 +138,7 @@ Renderer.prototype.render = function (gameState) {
   }
 
   // Render light
-  var lightPosition = gameState.getLightPosition();
+  const lightPosition = gameState.getLightPosition();
   if (lightPosition) {
     const data = RayCaster.getDecisionPoints(lightPosition);
 
@@ -146,9 +146,9 @@ Renderer.prototype.render = function (gameState) {
       ctx.lineWidth = 0.25;
       for (let idx = 0; idx !== data.decisionPoints.length; idx++) {
         const decisionPoint = data.decisionPoints[idx];
-        var body = decisionPoint.body;
+        const body = decisionPoint.body;
         const bodyPoints = body.points;
-        var point = bodyPoints[decisionPoint.idx];
+        const point = bodyPoints[decisionPoint.idx];
         if (decisionPoint.mode === RayCaster.Modes.STARTS) {
           ctx.beginPath();
           ctx.moveTo(point.x, point.y);
@@ -209,7 +209,7 @@ Renderer.prototype.render = function (gameState) {
   }
 
   if (true) { // show light origin
-    var lightPosition = gameState.getLightPosition();
+    const lightPosition = gameState.getLightPosition();
     if (lightPosition) {
       ctx.fillStyle = "rgba(0,128,128,0.9)";
       ctx.beginPath();

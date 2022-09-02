@@ -14,7 +14,7 @@ var RayCaster = {
 
     var sequence = 0;
     var bodies = gameState.getBodies().getBodyArray();
-    for (var idx = 0; idx != bodies.length; idx++) {
+    for (var idx = 0; idx !== bodies.length; idx++) {
       var body = bodies[idx];
       var points = body.points;
       var pointData = {
@@ -40,22 +40,21 @@ var RayCaster = {
 
           if (delta < 0) {
             if (remain != null) {
-              if (mode == RayCaster.Modes.NOT_STARTED) {
+              if (mode === RayCaster.Modes.NOT_STARTED) {
                 mode = RayCaster.Modes.STARTS;
-              } else if (mode == RayCaster.Modes.STARTS) {
+              } else if (mode === RayCaster.Modes.STARTS) {
                 mode = RayCaster.Modes.CONTINUES;
               }
-              if (remain == 0) {
-
+              if (remain === 0) {
                 mode = RayCaster.Modes.ENDS;
               }
             }
-          } else if (mode == RayCaster.Modes.STARTS || mode == RayCaster.Modes.CONTINUES) {
+          } else if (mode === RayCaster.Modes.STARTS || mode === RayCaster.Modes.CONTINUES) {
             mode = RayCaster.Modes.ENDS;
           } else if (remain == null) {
             remain = points.length;
           }
-          if (mode != RayCaster.Modes.NOT_STARTED) {
+          if (mode !== RayCaster.Modes.NOT_STARTED) {
             var decisionPoint = {
               angle: previous.angle,
               mode: mode,
@@ -69,12 +68,12 @@ var RayCaster = {
               data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.nextIdx] = decisionPoint;
             }
           }
-          if (mode == RayCaster.Modes.ENDS) {
+          if (mode === RayCaster.Modes.ENDS) {
             mode = RayCaster.Modes.NOT_STARTED;
             sequence++;
           }
         }
-        if (pointData.idx == 0 && previous != null) {
+        if (pointData.idx === 0 && previous != null) {
           // Interior buster- some errant cases seen
           if (remain == null) {
             remain = points.length + 1;
@@ -85,11 +84,10 @@ var RayCaster = {
           idx: pointData.idx
         };
         pointData.idx++;
-        if (pointData.idx == points.length) {
+        if (pointData.idx === points.length) {
           pointData.idx = 0;
         }
       } while (remain == null || remain-- > 0);
-
     }
     return data;
   },
@@ -127,13 +125,13 @@ var RayCaster = {
 
       var activeDecisionPoint = closestDecisionPoint;
 
-      for (var idx = 0; idx != data.decisionPoints.length; idx++) {
+      for (var idx = 0; idx !== data.decisionPoints.length; idx++) {
         var decisionPoint = data.decisionPoints[idx];
         delete data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.idx];
-        if (decisionPoint.mode != RayCaster.Modes.ENDS) {
+        if (decisionPoint.mode !== RayCaster.Modes.ENDS) {
           data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.nextIdx] = decisionPoint;
         }
-        if (decisionPoint.mode == RayCaster.Modes.STARTS) {
+        if (decisionPoint.mode === RayCaster.Modes.STARTS) {
           // Should hook on to new start point?
           var body = decisionPoint.body;
           var bodyPoints = body.points;
@@ -154,15 +152,15 @@ var RayCaster = {
         }
 
         // Traverse existing wall.
-        if (activeDecisionPoint != null && activeDecisionPoint.sequence == decisionPoint.sequence
-            && activeDecisionPoint.nextIdx == decisionPoint.idx) {
+        if (activeDecisionPoint != null && activeDecisionPoint.sequence === decisionPoint.sequence
+            && activeDecisionPoint.nextIdx === decisionPoint.idx) {
           activeDecisionPoint = decisionPoint;
           var body = decisionPoint.body;
           var bodyPoints = body.points;
           var point = bodyPoints[decisionPoint.idx];
           ctx.lineTo(point.x, point.y);
 
-          if (decisionPoint.mode == RayCaster.Modes.ENDS) {
+          if (decisionPoint.mode === RayCaster.Modes.ENDS) {
 
             // Loose scanner .. hook on to nearest.
             var closestDecisionPoint = null;

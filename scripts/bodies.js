@@ -4,8 +4,8 @@ var Bodies = function (gameState) {
   var height = gameState.getHeight();
   this.bodyArray = [];
 
-  for (var iy = 0; iy != height + 1; iy++) {
-    for (var ix = 0; ix != width + 1; ix++) {
+  for (var iy = 0; iy !== height + 1; iy++) {
+    for (var ix = 0; ix !== width + 1; ix++) {
       if (!done[ix + "/" + iy]) {
         {
           var body = {
@@ -16,9 +16,7 @@ var Bodies = function (gameState) {
           var y = iy;
           var px = null;
           var py = null;
-          var dx = null;
           var dy = null;
-          var dx
           do {
             done[x + "/" + y] = true;
             // Scan
@@ -60,9 +58,9 @@ var Bodies = function (gameState) {
                 x: x,
                 y: y
               });
-              if (dx == 1)
+              if (dx === 1)
                 y--;
-              else if (dx == -1)
+              else if (dx === -1)
                 y++;
               else
                 debugger;
@@ -88,9 +86,9 @@ var Bodies = function (gameState) {
                 x: x,
                 y: y
               });
-              if (dy == 1)
+              if (dy === 1)
                 x++;
-              else if (dy == -1)
+              else if (dy === -1)
                 x--;
               else
                 debugger;
@@ -117,7 +115,7 @@ var Bodies = function (gameState) {
             } else if (!nw && !ne && !se && !sw) {
               break;
             }
-          } while (x != ix || y != iy);
+          } while (x !== ix || y !== iy);
 
           if (body.points.length) {
             this.bodyArray.push(body);

@@ -48,11 +48,11 @@ Renderer.prototype.render = function (gameState) {
 
       if (true) { // Draw fancy grid
         ctx.beginPath();
-        for (var y = 0; y != height; y++) {
+        for (var y = 0; y !== height; y++) {
           ctx.moveTo(0, y);
           ctx.lineTo(width, y);
         }
-        for (var x = 0; x != width; x++) {
+        for (var x = 0; x !== width; x++) {
           ctx.moveTo(x, 0);
           ctx.lineTo(x, height);
         }
@@ -63,17 +63,17 @@ Renderer.prototype.render = function (gameState) {
 
       var bodies = gameState.getBodies().getBodyArray();
       ctx.beginPath();
-      for (var idx = 0; idx != bodies.length; idx++) {
+      for (var idx = 0; idx !== bodies.length; idx++) {
         var body = bodies[idx];
         var points = body.points;
 
-        for (var idx2 = 0; idx2 != points.length; idx2++) {
+        for (var idx2 = 0; idx2 !== points.length; idx2++) {
           var point = points[idx2];
-          if (idx2 == 0)
+          if (idx2 === 0)
             ctx.moveTo(point.x, point.y);
           else
             ctx.lineTo(point.x, point.y);
-          if (point.x == 0 && point.y == 0) {
+          if (point.x === 0 && point.y === 0) {
             ctx.lineTo(width, 0);
             ctx.lineTo(width, height);
             ctx.lineTo(0, height);
@@ -112,8 +112,8 @@ Renderer.prototype.render = function (gameState) {
     ctx.fillStyle = "rgba(100,120,100,0.5)";
 
     var node = 0;
-    for (var y = 0; y != height; y++) {
-      for (var x = 0; x != width; x++) {
+    for (var y = 0; y !== height; y++) {
+      for (var x = 0; x !== width; x++) {
         if (gameState.isBlocked(node)) {
           ctx.fillRect(x, y, 1, 1);
         }
@@ -144,17 +144,17 @@ Renderer.prototype.render = function (gameState) {
 
     if (false) { // visualize decision points in original order
       ctx.lineWidth = 0.25;
-      for (var idx = 0; idx != data.decisionPoints.length; idx++) {
+      for (var idx = 0; idx !== data.decisionPoints.length; idx++) {
         var decisionPoint = data.decisionPoints[idx];
         var body = decisionPoint.body;
         var bodyPoints = body.points;
         var point = bodyPoints[decisionPoint.idx];
-        if (decisionPoint.mode == RayCaster.Modes.STARTS) {
+        if (decisionPoint.mode === RayCaster.Modes.STARTS) {
           ctx.beginPath();
           ctx.moveTo(point.x, point.y);
         } else {
           ctx.lineTo(point.x, point.y);
-          if (decisionPoint.mode == RayCaster.Modes.ENDS) {
+          if (decisionPoint.mode === RayCaster.Modes.ENDS) {
             ctx.strokeStyle = ["rgba(255,0,0,0.5)", "rgba(0,255,0,0.5)", "rgba(0,0,255,0.5)",
               "rgba(0,255,255,0.5)", "rgba(255,0,255,0.5)", "rgba(255,255,0,0.5)"][decisionPoint.sequence % 6];
             ctx.stroke();
@@ -183,13 +183,13 @@ Renderer.prototype.render = function (gameState) {
       this.sprites.src = "sprites.png";
     }
     var receptors = gameState.getReceptors();
-    for (var idx = 0; idx != receptors.length; idx++) {
+    for (var idx = 0; idx !== receptors.length; idx++) {
       ctx.save();
       var receptor = receptors[idx];
 
       var light = receptor.light;
       var inPath = ctx.isPointInPath(receptor.x * this.GRID_SIZE, receptor.y * this.GRID_SIZE);
-      renderFeedback.receptorSuccess[idx] = (inPath == light);
+      renderFeedback.receptorSuccess[idx] = (inPath === light);
       var notLitAlpha = 0.5;
       if (inPath) {
         ctx.shadowColor = "yellow";

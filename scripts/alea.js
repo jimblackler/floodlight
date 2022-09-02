@@ -32,7 +32,7 @@ function Alea() {
     var s2 = 0;
     var c = 1;
 
-    if (args.length == 0) {
+    if (args.length === 0) {
       args = [+new Date];
     }
     var mash = Mash();
@@ -73,4 +73,4 @@ function Alea() {
     return random;
 
   }(Array.prototype.slice.call(arguments)));
-};
+}

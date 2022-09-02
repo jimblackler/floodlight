@@ -14,13 +14,13 @@ GameState.prototype.generateWalls = function (seed) {
   var outer = this;
   if (false) { // Method one
     // seed
-    for (var idx = 0; idx != this.width * this.height; idx++) {
+    for (var idx = 0; idx !== this.width * this.height; idx++) {
       this.grid[idx] = random() < .025;
     }
 
     // spread
-    for (var pass = 0; pass != 4; pass++) {
-      for (var idx = 0; idx != this.width * this.height; idx++) {
+    for (var pass = 0; pass !== 4; pass++) {
+      for (var idx = 0; idx !== this.width * this.height; idx++) {
 
         this.forNeighbours(idx, function (neighbour) {
           if (outer.grid[neighbour] && random() < .15) {
@@ -31,10 +31,10 @@ GameState.prototype.generateWalls = function (seed) {
     }
   } else {
 
-    for (var walls = 0; walls != 35; walls++) {
+    for (var walls = 0; walls !== 35; walls++) {
       var x;
       var y;
-      for (var attempts = 0; attempts != 4; attempts++) {
+      for (var attempts = 0; attempts !== 4; attempts++) {
         x = Math.floor(random() * this.width / 3) * 3;
         y = Math.floor(random() * this.height / 3) * 3;
         var node = outer.getNode(x, y);
@@ -65,7 +65,7 @@ GameState.prototype.generateWalls = function (seed) {
         if (node == null) {
           break;
         }
-        if (x == 0 && y == 0) {
+        if (x === 0 && y === 0) {
           // HORRIBLE hack for outer walls interior problem. Fix properly.
           break;
         }
@@ -105,10 +105,10 @@ GameState.prototype.generateReceptors = function () {
         var y = Math.floor(random() * this.height) + .5;
         if (!this.isBlockedXY(Math.floor(x), Math.floor(y))) {
           var valid = true;
-          var light = (count != 0);
-          for (var idx = 0; idx != receptors.length; idx++) {
+          var light = (count !== 0);
+          for (var idx = 0; idx !== receptors.length; idx++) {
             var other = receptors[idx];
-            if (light == other.light) {
+            if (light === other.light) {
               var distance = (x - other.x) * (x - other.x) + (y - other.y) * (y - other.y);
               if (distance < minDistance * minDistance) {
                 valid = false;
@@ -131,8 +131,8 @@ GameState.prototype.generateReceptors = function () {
     var failed = 0;
     var succeeded = 0;
     var example;
-    for (var y = 0; y != this.height; y++) {
-      for (var x = 0; x != this.width; x++) {
+    for (var y = 0; y !== this.height; y++) {
+      for (var x = 0; x !== this.width; x++) {
         if (!this.isBlockedXY(x, y)) {
           var lightPosition = {
             x: x + .5,
@@ -140,12 +140,12 @@ GameState.prototype.generateReceptors = function () {
           };
           RayCaster.loadLightPath(ctx, lightPosition, RayCaster.getDecisionPoints(lightPosition));
           var success = true;
-          for (var idx = 0; idx != receptors.length; idx++) {
+          for (var idx = 0; idx !== receptors.length; idx++) {
             var receptor = receptors[idx];
 
             var light = receptor.light;
             var inPath = ctx.isPointInPath(receptor.x, receptor.y);
-            var receptorSuccess = (inPath == light);
+            var receptorSuccess = (inPath === light);
             if (!receptorSuccess) {
               success = false;
             }

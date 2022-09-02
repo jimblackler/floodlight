@@ -6,7 +6,7 @@ const Bodies = function (gameState) {
 
   for (let iy = 0; iy !== height + 1; iy++) {
     for (let ix = 0; ix !== width + 1; ix++) {
-      if (!done[ix + "/" + iy]) {
+      if (!done[ix + '/' + iy]) {
         {
           const body = {
             points: []
@@ -18,7 +18,7 @@ const Bodies = function (gameState) {
           let py = null;
           let dy = null;
           do {
-            done[x + "/" + y] = true;
+            done[x + '/' + y] = true;
             // Scan
             const nw = gameState.isBlockedXY(x - 1, y - 1);
             const ne = gameState.isBlockedXY(x, y - 1);

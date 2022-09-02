@@ -91,7 +91,7 @@ GameState.DONE_DELAY = 2 * 1000;
 GameState.prototype.generateReceptors = function () {
 
   // Use dead-reckoning to discover valid light positions.
-  const ctx = document.createElement("canvas").getContext("2d");
+  const ctx = document.createElement('canvas').getContext('2d');
   const totalRequired = 10;
   const throwAway = 5;
   const targets = totalRequired + throwAway;

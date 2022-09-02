@@ -1,6 +1,6 @@
 const Renderer = function (gameDiv, size) {
   this.GRID_SIZE = size == null ? 32 : size;
-  this.canvas = document.createElement("canvas");
+  this.canvas = document.createElement('canvas');
   gameDiv.appendChild(this.canvas);
 };
 
@@ -32,7 +32,7 @@ Renderer.prototype.render = function (gameState) {
     }
   };
 
-  let ctx = this.canvas.getContext("2d");
+  let ctx = this.canvas.getContext('2d');
 
   if (true) { // draw traced bodies
     if (!this.bodiesImage) {
@@ -43,7 +43,7 @@ Renderer.prototype.render = function (gameState) {
       ctx = this.bodiesImage.getContext('2d');
       ctx.scale(this.GRID_SIZE, this.GRID_SIZE);
 
-      ctx.fillStyle = "rgba(0, 32, 0, 1)";
+      ctx.fillStyle = 'rgba(0, 32, 0, 1)';
       ctx.fillRect(0, 0, width, height);
 
       if (true) { // Draw fancy grid
@@ -56,7 +56,7 @@ Renderer.prototype.render = function (gameState) {
           ctx.moveTo(x, 0);
           ctx.lineTo(x, height);
         }
-        ctx.strokeStyle = "rgba(0,0,0,0.8)"
+        ctx.strokeStyle = 'rgba(0,0,0,0.8)'
         ctx.lineWidth = 0.03;
         ctx.stroke();
       }
@@ -86,20 +86,20 @@ Renderer.prototype.render = function (gameState) {
 
       if (true) {
         ctx.save();
-        ctx.shadowColor = "black";
+        ctx.shadowColor = 'black';
         ctx.shadowBlur = 20;
         ctx.shadowOffsetX = 8;
         ctx.shadowOffsetY = 8;
-        ctx.fillStyle = "rgba(200,180,120,0.8)";
+        ctx.fillStyle = 'rgba(200,180,120,0.8)';
         ctx.fill();
         ctx.restore();
       }
-      ctx.strokeStyle = "rgba(0,0,0,0.4)"
+      ctx.strokeStyle = 'rgba(0,0,0,0.4)'
       ctx.lineWidth = 0.1575;
       ctx.stroke();
 
       // Restore context
-      ctx = this.canvas.getContext("2d");
+      ctx = this.canvas.getContext('2d');
     }
 
     ctx.drawImage(this.bodiesImage, 0, 0);
@@ -109,7 +109,7 @@ Renderer.prototype.render = function (gameState) {
   ctx.scale(this.GRID_SIZE, this.GRID_SIZE);
 
   if (false) { // draw original blocks
-    ctx.fillStyle = "rgba(100,120,100,0.5)";
+    ctx.fillStyle = 'rgba(100,120,100,0.5)';
 
     let node = 0;
     for (let y = 0; y !== height; y++) {
@@ -123,7 +123,7 @@ Renderer.prototype.render = function (gameState) {
   }
 
   if (false) { // draw corner vertices
-    ctx.fillStyle = "rgba(0,128,0,0.9)";
+    ctx.fillStyle = 'rgba(0,128,0,0.9)';
 
     const bodies = gameState.getBodies().getBodyArray();
     for (let idx = 0; idx != bodies.length; idx++) {
@@ -155,8 +155,8 @@ Renderer.prototype.render = function (gameState) {
         } else {
           ctx.lineTo(point.x, point.y);
           if (decisionPoint.mode === RayCaster.Modes.ENDS) {
-            ctx.strokeStyle = ["rgba(255,0,0,0.5)", "rgba(0,255,0,0.5)", "rgba(0,0,255,0.5)",
-              "rgba(0,255,255,0.5)", "rgba(255,0,255,0.5)", "rgba(255,255,0,0.5)"][decisionPoint.sequence % 6];
+            ctx.strokeStyle = ['rgba(255,0,0,0.5)', 'rgba(0,255,0,0.5)', 'rgba(0,0,255,0.5)',
+              'rgba(0,255,255,0.5)', 'rgba(255,0,255,0.5)', 'rgba(255,255,0,0.5)'][decisionPoint.sequence % 6];
             ctx.stroke();
           }
         }
@@ -166,9 +166,9 @@ Renderer.prototype.render = function (gameState) {
     RayCaster.loadLightPath(ctx, lightPosition, data);
     const gradient = ctx.createRadialGradient(lightPosition.x, lightPosition.y, 0.1, lightPosition.x,
         lightPosition.y, Math.max(width, height));
-    gradient.addColorStop(0, "rgba(255,255,255,1)");
-    gradient.addColorStop(0.2, "rgba(255,255,255,0.58)");
-    gradient.addColorStop(1, "rgba(255,255,255,0.25)");
+    gradient.addColorStop(0, 'rgba(255,255,255,1)');
+    gradient.addColorStop(0.2, 'rgba(255,255,255,0.58)');
+    gradient.addColorStop(1, 'rgba(255,255,255,0.25)');
     ctx.fillStyle = gradient;
     ctx.fill();
 
@@ -180,7 +180,7 @@ Renderer.prototype.render = function (gameState) {
   if (true) { // show receptors
     if (!this.sprites) {
       this.sprites = new Image();
-      this.sprites.src = "sprites.png";
+      this.sprites.src = 'sprites.png';
     }
     const receptors = gameState.getReceptors();
     for (let idx = 0; idx !== receptors.length; idx++) {
@@ -192,7 +192,7 @@ Renderer.prototype.render = function (gameState) {
       renderFeedback.receptorSuccess[idx] = (inPath === light);
       const notLitAlpha = 0.5;
       if (inPath) {
-        ctx.shadowColor = "yellow";
+        ctx.shadowColor = 'yellow';
         ctx.shadowBlur = 20 + 20 * gameState.getDoneDelay();
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
@@ -205,13 +205,12 @@ Renderer.prototype.render = function (gameState) {
           - size / 2, size, size);
       ctx.restore();
     }
-
   }
 
   if (true) { // show light origin
     const lightPosition = gameState.getLightPosition();
     if (lightPosition) {
-      ctx.fillStyle = "rgba(0,128,128,0.9)";
+      ctx.fillStyle = 'rgba(0,128,128,0.9)';
       ctx.beginPath();
       ctx.arc(lightPosition.x, lightPosition.y, 0.25, 0, Math.PI * 2);
       ctx.fill();

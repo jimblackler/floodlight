@@ -1,4 +1,4 @@
-const renderer = new Renderer(document.getElementById("mainDiv"));
+const renderer = new Renderer(document.getElementById('mainDiv'));
 
 const gameState = new GameState(28, 28);
 gameState.generateWalls();

@@ -65,7 +65,7 @@ const RayCaster = {
             };
             data.decisionPoints.push(decisionPoint);
             if (previous.angle < -Math.PI / 2 && pointData.angle >= Math.PI / 2) {
-              data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.nextIdx] = decisionPoint;
+              data.liveDecisionPoints[decisionPoint.sequence + '/' + decisionPoint.nextIdx] = decisionPoint;
             }
           }
           if (mode === RayCaster.Modes.ENDS) {
@@ -127,9 +127,9 @@ const RayCaster = {
 
       for (let idx = 0; idx !== data.decisionPoints.length; idx++) {
         const decisionPoint = data.decisionPoints[idx];
-        delete data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.idx];
+        delete data.liveDecisionPoints[decisionPoint.sequence + '/' + decisionPoint.idx];
         if (decisionPoint.mode !== RayCaster.Modes.ENDS) {
-          data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.nextIdx] =
+          data.liveDecisionPoints[decisionPoint.sequence + '/' + decisionPoint.nextIdx] =
               decisionPoint;
         }
         if (decisionPoint.mode === RayCaster.Modes.STARTS) {
@@ -184,18 +184,16 @@ const RayCaster = {
             if (closestDecisionPoint == null) {
               //debugger;
               break;
-            } else {
+            } else if (closestPosition) {
               // Scan to hit point.
               ctx.lineTo(closestPosition.x, closestPosition.y);
               activeDecisionPoint = closestDecisionPoint;
             }
-
           }
         }
       }
       ctx.closePath();
     }
-
   },
 
   getCollisionPoint: function (decisionPoint, light, angle) {
@@ -212,5 +210,4 @@ const RayCaster = {
       y: (b.y - a.y) * t + a.y
     };
   }
-
 };

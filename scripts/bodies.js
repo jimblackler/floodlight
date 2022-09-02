@@ -1,15 +1,15 @@
-var Bodies = function(gameState) {
+var Bodies = function (gameState) {
   var done = [];
   var width = gameState.getWidth();
   var height = gameState.getHeight();
   this.bodyArray = [];
 
-  for ( var iy = 0; iy != height + 1; iy++) {
-    for ( var ix = 0; ix != width + 1; ix++) {
+  for (var iy = 0; iy != height + 1; iy++) {
+    for (var ix = 0; ix != width + 1; ix++) {
       if (!done[ix + "/" + iy]) {
         {
           var body = {
-            points : []
+            points: []
           };
 
           var x = ix;
@@ -36,29 +36,29 @@ var Bodies = function(gameState) {
               break;
             } else if (!nw && ne && se && sw) {
               body.points.push({
-                x : x,
-                y : y
+                x: x,
+                y: y
               });
               y--;
             } else if (nw && !ne && se && sw) {
               body.points.push({
-                x : x,
-                y : y
+                x: x,
+                y: y
               });
               x++;
             } else if (!nw && !ne && se && sw) {
               x++;
             } else if (nw && ne && !se && sw) {
               body.points.push({
-                x : x,
-                y : y
+                x: x,
+                y: y
               });
               y++;
             } else if (!nw && ne && !se && sw) {
               // ??
               body.points.push({
-                x : x,
-                y : y
+                x: x,
+                y: y
               });
               if (dx == 1)
                 y--;
@@ -70,14 +70,14 @@ var Bodies = function(gameState) {
               y++;
             } else if (!nw && !ne && !se && sw) {
               body.points.push({
-                x : x,
-                y : y
+                x: x,
+                y: y
               });
               y++;
             } else if (nw && ne && se && !sw) {
               body.points.push({
-                x : x,
-                y : y
+                x: x,
+                y: y
               });
               x--;
             } else if (!nw && ne && se && !sw) {
@@ -85,8 +85,8 @@ var Bodies = function(gameState) {
             } else if (nw && !ne && se && !sw) {
               // ??
               body.points.push({
-                x : x,
-                y : y
+                x: x,
+                y: y
               });
               if (dy == 1)
                 x++;
@@ -96,22 +96,22 @@ var Bodies = function(gameState) {
                 debugger;
             } else if (!nw && !ne && se && !sw) {
               body.points.push({
-                x : x,
-                y : y
+                x: x,
+                y: y
               });
               x++;
             } else if (nw && ne && !se && !sw) {
               x--;
             } else if (!nw && ne && !se && !sw) {
               body.points.push({
-                x : x,
-                y : y
+                x: x,
+                y: y
               });
               y--;
             } else if (nw && !ne && !se && !sw) {
               body.points.push({
-                x : x,
-                y : y
+                x: x,
+                y: y
               });
               x--;
             } else if (!nw && !ne && !se && !sw) {
@@ -130,6 +130,6 @@ var Bodies = function(gameState) {
 
 };
 
-Bodies.prototype.getBodyArray = function() {
+Bodies.prototype.getBodyArray = function () {
   return this.bodyArray;
 };

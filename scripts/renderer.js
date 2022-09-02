@@ -1,33 +1,33 @@
-var Renderer = function(gameDiv, size) {
+var Renderer = function (gameDiv, size) {
   this.GRID_SIZE = size == null ? 32 : size;
   this.canvas = document.createElement("canvas");
   gameDiv.appendChild(this.canvas);
 };
 
-Renderer.prototype.render = function(gameState) {
+Renderer.prototype.render = function (gameState) {
   var width = gameState.getWidth();
   var height = gameState.getHeight();
   this.canvas.width = width * this.GRID_SIZE;
   this.canvas.height = height * this.GRID_SIZE;
 
   var outer = this;
-  this.canvas.onmousedown = function(e) {
+  this.canvas.onmousedown = function (e) {
     this.mouseDown = true;
     gameState.setLightPosition({
-      x : (e.clientX - outer.canvas.offsetLeft) / outer.GRID_SIZE,
-      y : (e.clientY - outer.canvas.offsetTop) / outer.GRID_SIZE
+      x: (e.clientX - outer.canvas.offsetLeft) / outer.GRID_SIZE,
+      y: (e.clientY - outer.canvas.offsetTop) / outer.GRID_SIZE
     });
   };
 
-  this.canvas.onmouseup = function(e) {
+  this.canvas.onmouseup = function (e) {
     this.mouseDown = false;
   };
 
-  this.canvas.onmousemove = function(e) {
+  this.canvas.onmousemove = function (e) {
     if (this.mouseDown) {
       gameState.setLightPosition({
-        x : (e.clientX - outer.canvas.offsetLeft) / outer.GRID_SIZE,
-        y : (e.clientY - outer.canvas.offsetTop) / outer.GRID_SIZE
+        x: (e.clientX - outer.canvas.offsetLeft) / outer.GRID_SIZE,
+        y: (e.clientY - outer.canvas.offsetTop) / outer.GRID_SIZE
       });
     }
   };
@@ -48,11 +48,11 @@ Renderer.prototype.render = function(gameState) {
 
       if (true) { // Draw fancy grid
         ctx.beginPath();
-        for ( var y = 0; y != height; y++) {
+        for (var y = 0; y != height; y++) {
           ctx.moveTo(0, y);
           ctx.lineTo(width, y);
         }
-        for ( var x = 0; x != width; x++) {
+        for (var x = 0; x != width; x++) {
           ctx.moveTo(x, 0);
           ctx.lineTo(x, height);
         }
@@ -63,11 +63,11 @@ Renderer.prototype.render = function(gameState) {
 
       var bodies = gameState.getBodies().getBodyArray();
       ctx.beginPath();
-      for ( var idx = 0; idx != bodies.length; idx++) {
+      for (var idx = 0; idx != bodies.length; idx++) {
         var body = bodies[idx];
         var points = body.points;
 
-        for ( var idx2 = 0; idx2 != points.length; idx2++) {
+        for (var idx2 = 0; idx2 != points.length; idx2++) {
           var point = points[idx2];
           if (idx2 == 0)
             ctx.moveTo(point.x, point.y);
@@ -112,8 +112,8 @@ Renderer.prototype.render = function(gameState) {
     ctx.fillStyle = "rgba(100,120,100,0.5)";
 
     var node = 0;
-    for ( var y = 0; y != height; y++) {
-      for ( var x = 0; x != width; x++) {
+    for (var y = 0; y != height; y++) {
+      for (var x = 0; x != width; x++) {
         if (gameState.isBlocked(node)) {
           ctx.fillRect(x, y, 1, 1);
         }
@@ -126,10 +126,10 @@ Renderer.prototype.render = function(gameState) {
     ctx.fillStyle = "rgba(0,128,0,0.9)";
 
     var bodies = gameState.getBodies().getBodyArray();
-    for ( var idx = 0; idx != bodies.length; idx++) {
+    for (var idx = 0; idx != bodies.length; idx++) {
       var body = bodies[idx];
       var points = body.points;
-      for ( var idx2 = 0; idx2 != points.length; idx2++) {
+      for (var idx2 = 0; idx2 != points.length; idx2++) {
         ctx.beginPath();
         ctx.arc(points[idx2].x, points[idx2].y, 0.15, 0, Math.PI * 2);
         ctx.fill();
@@ -144,7 +144,7 @@ Renderer.prototype.render = function(gameState) {
 
     if (false) { // visualize decision points in original order
       ctx.lineWidth = 0.25;
-      for ( var idx = 0; idx != data.decisionPoints.length; idx++) {
+      for (var idx = 0; idx != data.decisionPoints.length; idx++) {
         var decisionPoint = data.decisionPoints[idx];
         var body = decisionPoint.body;
         var bodyPoints = body.points;
@@ -155,8 +155,8 @@ Renderer.prototype.render = function(gameState) {
         } else {
           ctx.lineTo(point.x, point.y);
           if (decisionPoint.mode == RayCaster.Modes.ENDS) {
-            ctx.strokeStyle = [ "rgba(255,0,0,0.5)", "rgba(0,255,0,0.5)", "rgba(0,0,255,0.5)",
-                "rgba(0,255,255,0.5)", "rgba(255,0,255,0.5)", "rgba(255,255,0,0.5)" ][decisionPoint.sequence % 6];
+            ctx.strokeStyle = ["rgba(255,0,0,0.5)", "rgba(0,255,0,0.5)", "rgba(0,0,255,0.5)",
+              "rgba(0,255,255,0.5)", "rgba(255,0,255,0.5)", "rgba(255,255,0,0.5)"][decisionPoint.sequence % 6];
             ctx.stroke();
           }
         }
@@ -175,7 +175,7 @@ Renderer.prototype.render = function(gameState) {
   }
 
   var renderFeedback = {
-    receptorSuccess : []
+    receptorSuccess: []
   };
   if (true) { // show receptors
     if (!this.sprites) {
@@ -183,7 +183,7 @@ Renderer.prototype.render = function(gameState) {
       this.sprites.src = "sprites.png";
     }
     var receptors = gameState.getReceptors();
-    for ( var idx = 0; idx != receptors.length; idx++) {
+    for (var idx = 0; idx != receptors.length; idx++) {
       ctx.save();
       var receptor = receptors[idx];
 

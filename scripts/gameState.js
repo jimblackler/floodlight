@@ -1,10 +1,10 @@
-var GameState = function(width, height) {
+var GameState = function (width, height) {
   this.width = width;
   this.height = height;
   this.grid = [];
 }
 
-GameState.prototype.generateWalls = function(seed) {
+GameState.prototype.generateWalls = function (seed) {
 
   if (seed) {
     window.random = new Alea(seed);
@@ -14,15 +14,15 @@ GameState.prototype.generateWalls = function(seed) {
   var outer = this;
   if (false) { // Method one
     // seed
-    for ( var idx = 0; idx != this.width * this.height; idx++) {
+    for (var idx = 0; idx != this.width * this.height; idx++) {
       this.grid[idx] = random() < .025;
     }
 
     // spread
-    for ( var pass = 0; pass != 4; pass++) {
-      for ( var idx = 0; idx != this.width * this.height; idx++) {
+    for (var pass = 0; pass != 4; pass++) {
+      for (var idx = 0; idx != this.width * this.height; idx++) {
 
-        this.forNeighbours(idx, function(neighbour) {
+        this.forNeighbours(idx, function (neighbour) {
           if (outer.grid[neighbour] && random() < .15) {
             outer.grid[idx] = true;
           }
@@ -31,10 +31,10 @@ GameState.prototype.generateWalls = function(seed) {
     }
   } else {
 
-    for ( var walls = 0; walls != 35; walls++) {
+    for (var walls = 0; walls != 35; walls++) {
       var x;
       var y;
-      for ( var attempts = 0; attempts != 4; attempts++) {
+      for (var attempts = 0; attempts != 4; attempts++) {
         x = Math.floor(random() * this.width / 3) * 3;
         y = Math.floor(random() * this.height / 3) * 3;
         var node = outer.getNode(x, y);
@@ -88,7 +88,7 @@ GameState.prototype.generateWalls = function(seed) {
 
 GameState.DONE_DELAY = 2 * 1000;
 
-GameState.prototype.generateReceptors = function() {
+GameState.prototype.generateReceptors = function () {
 
   // Use dead-reckoning to discover valid light positions.
   var ctx = document.createElement("canvas").getContext("2d");
@@ -99,14 +99,14 @@ GameState.prototype.generateReceptors = function() {
   var minDistance = 7;
   while (this.allReceptors.length < targets) {
     var receptors = [];
-    for ( var count = 0; count < 5; count++) {
+    for (var count = 0; count < 5; count++) {
       while (true) {
         var x = Math.floor(random() * this.width) + .5;
         var y = Math.floor(random() * this.height) + .5;
         if (!this.isBlockedXY(Math.floor(x), Math.floor(y))) {
           var valid = true;
           var light = (count != 0);
-          for ( var idx = 0; idx != receptors.length; idx++) {
+          for (var idx = 0; idx != receptors.length; idx++) {
             var other = receptors[idx];
             if (light == other.light) {
               var distance = (x - other.x) * (x - other.x) + (y - other.y) * (y - other.y);
@@ -118,9 +118,9 @@ GameState.prototype.generateReceptors = function() {
           }
           if (valid) {
             receptors.push({
-              x : x,
-              y : y,
-              light : light
+              x: x,
+              y: y,
+              light: light
             });
             break;
           }
@@ -131,16 +131,16 @@ GameState.prototype.generateReceptors = function() {
     var failed = 0;
     var succeeded = 0;
     var example;
-    for ( var y = 0; y != this.height; y++) {
-      for ( var x = 0; x != this.width; x++) {
+    for (var y = 0; y != this.height; y++) {
+      for (var x = 0; x != this.width; x++) {
         if (!this.isBlockedXY(x, y)) {
           var lightPosition = {
-            x : x + .5,
-            y : y + .5
+            x: x + .5,
+            y: y + .5
           };
           RayCaster.loadLightPath(ctx, lightPosition, RayCaster.getDecisionPoints(lightPosition));
           var success = true;
-          for ( var idx = 0; idx != receptors.length; idx++) {
+          for (var idx = 0; idx != receptors.length; idx++) {
             var receptor = receptors[idx];
 
             var light = receptor.light;
@@ -153,8 +153,8 @@ GameState.prototype.generateReceptors = function() {
           if (success) {
             succeeded++;
             example = {
-              x : x,
-              y : y
+              x: x,
+              y: y
             };
           } else {
             failed++;
@@ -164,45 +164,45 @@ GameState.prototype.generateReceptors = function() {
     }
     if (succeeded > 0) {
       this.allReceptors.push({
-        receptors : receptors,
-        succeeded : succeeded,
-        failed : failed,
-        example : example
+        receptors: receptors,
+        succeeded: succeeded,
+        failed: failed,
+        example: example
 
       })
     }
 
   }
-  this.allReceptors.sort(function(a, b) {
+  this.allReceptors.sort(function (a, b) {
     return b.succeeded - a.succeeded;
   });
 
   this.allReceptors = this.allReceptors.splice(throwAway, totalRequired);
 }
 
-GameState.prototype.nextReceptors = function() {
+GameState.prototype.nextReceptors = function () {
   this.receptors = this.allReceptors[this.receptorsIdx].receptors;
   this.doneFor = 0;
   this.receptorsIdx++;
 }
 
-GameState.prototype.getBodies = function() {
+GameState.prototype.getBodies = function () {
   return this.bodies;
 }
 
-GameState.prototype.getReceptors = function() {
+GameState.prototype.getReceptors = function () {
   return this.receptors;
 }
 
-GameState.prototype.getHeight = function() {
+GameState.prototype.getHeight = function () {
   return this.height;
 }
 
-GameState.prototype.getWidth = function() {
+GameState.prototype.getWidth = function () {
   return this.width;
 }
 
-GameState.prototype.forNeighbours = function(node, f) {
+GameState.prototype.forNeighbours = function (node, f) {
   var x = this.getX(node);
   var y = this.getY(node);
 
@@ -220,7 +220,7 @@ GameState.prototype.forNeighbours = function(node, f) {
   }
 }
 
-GameState.prototype.getNode = function(x, y) {
+GameState.prototype.getNode = function (x, y) {
   if (x < 0) {
     return null;
   }
@@ -238,19 +238,19 @@ GameState.prototype.getNode = function(x, y) {
   return x + y * this.width;
 }
 
-GameState.prototype.getX = function(idx) {
+GameState.prototype.getX = function (idx) {
   return idx % this.width;
 }
 
-GameState.prototype.getY = function(idx) {
+GameState.prototype.getY = function (idx) {
   return Math.floor(idx / this.width);
 }
 
-GameState.prototype.isBlocked = function(node) {
+GameState.prototype.isBlocked = function (node) {
   return this.grid[node];
 }
 
-GameState.prototype.isBlockedXY = function(x, y) {
+GameState.prototype.isBlockedXY = function (x, y) {
   var node = this.getNode(x, y);
   if (node == null) {
     return true;
@@ -259,24 +259,24 @@ GameState.prototype.isBlockedXY = function(x, y) {
   }
 }
 
-GameState.prototype.setLightPosition = function(pos) {
+GameState.prototype.setLightPosition = function (pos) {
   if (!this.isBlockedXY(Math.floor(pos.x), Math.floor(pos.y))) {
     this.lightPosition = pos;
   }
 }
 
-GameState.prototype.getLightPosition = function() {
+GameState.prototype.getLightPosition = function () {
   return this.lightPosition;
 }
 
-GameState.prototype.getDoneDelay = function() {
+GameState.prototype.getDoneDelay = function () {
   return this.doneFor / GameState.DONE_DELAY;
 }
 
-GameState.prototype.process = function(delta, renderFeedback) {
+GameState.prototype.process = function (delta, renderFeedback) {
 
   var allDone = true;
-  for ( var idx = 0; idx != this.receptors.length; idx++) {
+  for (var idx = 0; idx != this.receptors.length; idx++) {
     var receptor = this.receptors[idx];
     if (!renderFeedback.receptorSuccess[idx]) {
       allDone = false;

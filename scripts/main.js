@@ -4,12 +4,12 @@ var gameState = new GameState(28, 28);
 gameState.generateWalls();
 
 
-document.onkeypress = function(evt) {
+document.onkeypress = function (evt) {
   gameState.nextReceptors();
 };
 
 var prevTime = null;
-var iteration = function() {
+var iteration = function () {
   var time = new Date().getTime();
   var renderFeedback = renderer.render(gameState);
 
@@ -19,7 +19,7 @@ var iteration = function() {
   }
   prevTime = time;
   setTimeout(iteration, 1);
-  
+
 }
 
 iteration();

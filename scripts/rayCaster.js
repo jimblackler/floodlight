@@ -1,24 +1,24 @@
 var RayCaster = {
-  Modes : {
-    NOT_STARTED : 0,
-    STARTS : 1,
-    CONTINUES : 2,
-    ENDS : 3
+  Modes: {
+    NOT_STARTED: 0,
+    STARTS: 1,
+    CONTINUES: 2,
+    ENDS: 3
   },
 
-  getDecisionPoints : function(lightPosition) {
+  getDecisionPoints: function (lightPosition) {
     var data = {
-      liveDecisionPoints : {},
-      decisionPoints : []
+      liveDecisionPoints: {},
+      decisionPoints: []
     };
 
     var sequence = 0;
     var bodies = gameState.getBodies().getBodyArray();
-    for ( var idx = 0; idx != bodies.length; idx++) {
+    for (var idx = 0; idx != bodies.length; idx++) {
       var body = bodies[idx];
       var points = body.points;
       var pointData = {
-        idx : 0
+        idx: 0
       };
       var previous = null;
       var remain = null;
@@ -57,12 +57,12 @@ var RayCaster = {
           }
           if (mode != RayCaster.Modes.NOT_STARTED) {
             var decisionPoint = {
-              angle : previous.angle,
-              mode : mode,
-              body : body,
-              sequence : sequence,
-              idx : previous.idx,
-              nextIdx : pointData.idx
+              angle: previous.angle,
+              mode: mode,
+              body: body,
+              sequence: sequence,
+              idx: previous.idx,
+              nextIdx: pointData.idx
             };
             data.decisionPoints.push(decisionPoint);
             if (previous.angle < -Math.PI / 2 && pointData.angle >= Math.PI / 2) {
@@ -81,8 +81,8 @@ var RayCaster = {
           }
         }
         previous = {
-          angle : pointData.angle,
-          idx : pointData.idx
+          angle: pointData.angle,
+          idx: pointData.idx
         };
         pointData.idx++;
         if (pointData.idx == points.length) {
@@ -94,9 +94,9 @@ var RayCaster = {
     return data;
   },
 
-  loadLightPath : function(ctx, lightPosition, data) {
+  loadLightPath: function (ctx, lightPosition, data) {
 
-    data.decisionPoints.sort(function(a, b) {
+    data.decisionPoints.sort(function (a, b) {
       var result = b.angle - a.angle;
       if (result == 0) {
         result = a.mode - b.mode;
@@ -127,7 +127,7 @@ var RayCaster = {
 
       var activeDecisionPoint = closestDecisionPoint;
 
-      for ( var idx = 0; idx != data.decisionPoints.length; idx++) {
+      for (var idx = 0; idx != data.decisionPoints.length; idx++) {
         var decisionPoint = data.decisionPoints[idx];
         delete data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.idx];
         if (decisionPoint.mode != RayCaster.Modes.ENDS) {
@@ -198,7 +198,7 @@ var RayCaster = {
 
   },
 
-  getCollisionPoint : function(decisionPoint, light, angle) {
+  getCollisionPoint: function (decisionPoint, light, angle) {
     var body = decisionPoint.body;
     var bodyPoints = body.points;
     var a = bodyPoints[decisionPoint.idx];
@@ -208,8 +208,8 @@ var RayCaster = {
     var ab0 = b0 - a0;
     var t = -a0 / ab0;
     return {
-      x : (b.x - a.x) * t + a.x,
-      y : (b.y - a.y) * t + a.y
+      x: (b.x - a.x) * t + a.x,
+      y: (b.y - a.y) * t + a.y
     };
   }
 

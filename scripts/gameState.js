@@ -165,10 +165,10 @@ GameState.prototype.generateReceptors = function () {
     }
     if (succeeded > 0) {
       this.allReceptors.push({
-        receptors: receptors,
-        succeeded: succeeded,
-        failed: failed,
-        example: example
+        receptors,
+        succeeded,
+        failed,
+        example
       })
     }
   }

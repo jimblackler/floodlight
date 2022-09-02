@@ -1,12 +1,12 @@
-const RayCaster = {
-  Modes: {
+class RayCaster {
+  static Modes = {
     NOT_STARTED: 0,
     STARTS: 1,
     CONTINUES: 2,
     ENDS: 3
-  },
+  }
 
-  getDecisionPoints: function (lightPosition) {
+  static getDecisionPoints(lightPosition) {
     const data = {
       liveDecisionPoints: {},
       decisionPoints: []
@@ -90,10 +90,9 @@ const RayCaster = {
       } while (remain == null || remain-- > 0);
     }
     return data;
-  },
+  }
 
-  loadLightPath: function (ctx, lightPosition, data) {
-
+  static loadLightPath(ctx, lightPosition, data) {
     data.decisionPoints.sort(function (a, b) {
       let result = b.angle - a.angle;
       if (result === 0) {
@@ -194,9 +193,9 @@ const RayCaster = {
       }
       ctx.closePath();
     }
-  },
+  }
 
-  getCollisionPoint: function (decisionPoint, light, angle) {
+  static getCollisionPoint(decisionPoint, light, angle) {
     const body = decisionPoint.body;
     const bodyPoints = body.points;
     const a = bodyPoints[decisionPoint.idx];
@@ -210,4 +209,4 @@ const RayCaster = {
       y: (b.y - a.y) * t + a.y
     };
   }
-};
+}

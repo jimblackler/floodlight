@@ -169,10 +169,8 @@ GameState.prototype.generateReceptors = function () {
         succeeded: succeeded,
         failed: failed,
         example: example
-
       })
     }
-
   }
   this.allReceptors.sort(function (a, b) {
     return b.succeeded - a.succeeded;
@@ -275,7 +273,6 @@ GameState.prototype.getDoneDelay = function () {
 }
 
 GameState.prototype.process = function (delta, renderFeedback) {
-
   let allDone = true;
   for (let idx = 0; idx != this.receptors.length; idx++) {
     const receptor = this.receptors[idx];

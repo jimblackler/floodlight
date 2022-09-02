@@ -274,7 +274,7 @@ GameState.prototype.getDoneDelay = function () {
 
 GameState.prototype.process = function (delta, renderFeedback) {
   let allDone = true;
-  for (let idx = 0; idx != this.receptors.length; idx++) {
+  for (let idx = 0; idx !== this.receptors.length; idx++) {
     const receptor = this.receptors[idx];
     if (!renderFeedback.receptorSuccess[idx]) {
       allDone = false;

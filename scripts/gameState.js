@@ -1,5 +1,6 @@
+const DONE_DELAY = 2 * 1000;
+
 class GameState {
-  DONE_DELAY = 2 * 1000;
 
   width;
   height;
@@ -278,7 +279,7 @@ class GameState {
   }
 
   getDoneDelay() {
-    return this.doneFor / GameState.DONE_DELAY;
+    return this.doneFor / DONE_DELAY;
   }
 
   process(delta, renderFeedback) {
@@ -291,7 +292,7 @@ class GameState {
     }
     if (allDone) {
       this.doneFor += delta;
-      if (this.doneFor >= GameState.DONE_DELAY) {
+      if (this.doneFor >= DONE_DELAY) {
         this.nextReceptors();
       }
     } else {

@@ -1,6 +1,6 @@
-var renderer = new Renderer(document.getElementById("mainDiv"));
+const renderer = new Renderer(document.getElementById("mainDiv"));
 
-var gameState = new GameState(28, 28);
+const gameState = new GameState(28, 28);
 gameState.generateWalls();
 
 
@@ -8,10 +8,10 @@ document.onkeypress = function (evt) {
   gameState.nextReceptors();
 };
 
-var prevTime = null;
-var iteration = function () {
-  var time = new Date().getTime();
-  var renderFeedback = renderer.render(gameState);
+let prevTime = null;
+const iteration = function () {
+  const time = new Date().getTime();
+  const renderFeedback = renderer.render(gameState);
 
   if (prevTime != null) {
     // TODO(jimblackler): contemplate how to avoid requiring feedback.
@@ -20,6 +20,6 @@ var iteration = function () {
   prevTime = time;
   setTimeout(iteration, 1);
 
-}
+};
 
 iteration();

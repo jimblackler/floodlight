@@ -1,16 +1,16 @@
-var Renderer = function (gameDiv, size) {
+const Renderer = function (gameDiv, size) {
   this.GRID_SIZE = size == null ? 32 : size;
   this.canvas = document.createElement("canvas");
   gameDiv.appendChild(this.canvas);
 };
 
 Renderer.prototype.render = function (gameState) {
-  var width = gameState.getWidth();
-  var height = gameState.getHeight();
+  const width = gameState.getWidth();
+  const height = gameState.getHeight();
   this.canvas.width = width * this.GRID_SIZE;
   this.canvas.height = height * this.GRID_SIZE;
 
-  var outer = this;
+  const outer = this;
   this.canvas.onmousedown = function (e) {
     this.mouseDown = true;
     gameState.setLightPosition({
@@ -32,7 +32,7 @@ Renderer.prototype.render = function (gameState) {
     }
   };
 
-  var ctx = this.canvas.getContext("2d");
+  let ctx = this.canvas.getContext("2d");
 
   if (true) { // draw traced bodies
     if (!this.bodiesImage) {
@@ -111,7 +111,7 @@ Renderer.prototype.render = function (gameState) {
   if (false) { // draw original blocks
     ctx.fillStyle = "rgba(100,120,100,0.5)";
 
-    var node = 0;
+    let node = 0;
     for (let y = 0; y !== height; y++) {
       for (let x = 0; x !== width; x++) {
         if (gameState.isBlocked(node)) {
@@ -140,14 +140,14 @@ Renderer.prototype.render = function (gameState) {
   // Render light
   var lightPosition = gameState.getLightPosition();
   if (lightPosition) {
-    var data = RayCaster.getDecisionPoints(lightPosition);
+    const data = RayCaster.getDecisionPoints(lightPosition);
 
     if (false) { // visualize decision points in original order
       ctx.lineWidth = 0.25;
       for (let idx = 0; idx !== data.decisionPoints.length; idx++) {
-        var decisionPoint = data.decisionPoints[idx];
+        const decisionPoint = data.decisionPoints[idx];
         var body = decisionPoint.body;
-        var bodyPoints = body.points;
+        const bodyPoints = body.points;
         var point = bodyPoints[decisionPoint.idx];
         if (decisionPoint.mode === RayCaster.Modes.STARTS) {
           ctx.beginPath();
@@ -164,7 +164,7 @@ Renderer.prototype.render = function (gameState) {
     }
 
     RayCaster.loadLightPath(ctx, lightPosition, data);
-    var gradient = ctx.createRadialGradient(lightPosition.x, lightPosition.y, 0.1, lightPosition.x,
+    const gradient = ctx.createRadialGradient(lightPosition.x, lightPosition.y, 0.1, lightPosition.x,
         lightPosition.y, Math.max(width, height));
     gradient.addColorStop(0, "rgba(255,255,255,1)");
     gradient.addColorStop(0.2, "rgba(255,255,255,0.58)");
@@ -174,7 +174,7 @@ Renderer.prototype.render = function (gameState) {
 
   }
 
-  var renderFeedback = {
+  const renderFeedback = {
     receptorSuccess: []
   };
   if (true) { // show receptors
@@ -182,15 +182,15 @@ Renderer.prototype.render = function (gameState) {
       this.sprites = new Image();
       this.sprites.src = "sprites.png";
     }
-    var receptors = gameState.getReceptors();
+    const receptors = gameState.getReceptors();
     for (let idx = 0; idx !== receptors.length; idx++) {
       ctx.save();
-      var receptor = receptors[idx];
+      const receptor = receptors[idx];
 
-      var light = receptor.light;
-      var inPath = ctx.isPointInPath(receptor.x * this.GRID_SIZE, receptor.y * this.GRID_SIZE);
+      const light = receptor.light;
+      const inPath = ctx.isPointInPath(receptor.x * this.GRID_SIZE, receptor.y * this.GRID_SIZE);
       renderFeedback.receptorSuccess[idx] = (inPath === light);
-      var notLitAlpha = 0.5;
+      const notLitAlpha = 0.5;
       if (inPath) {
         ctx.shadowColor = "yellow";
         ctx.shadowBlur = 20 + 20 * gameState.getDoneDelay();
@@ -200,7 +200,7 @@ Renderer.prototype.render = function (gameState) {
       } else {
         ctx.globalAlpha = notLitAlpha;
       }
-      var size = inPath ? 1.1 : 0.9;
+      const size = inPath ? 1.1 : 0.9;
       ctx.drawImage(this.sprites, light ? 0 : 64, 0, 64, 64, receptor.x - size / 2, receptor.y
           - size / 2, size, size);
       ctx.restore();

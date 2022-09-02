@@ -1,4 +1,4 @@
-var RayCaster = {
+const RayCaster = {
   Modes: {
     NOT_STARTED: 0,
     STARTS: 1,
@@ -7,30 +7,30 @@ var RayCaster = {
   },
 
   getDecisionPoints: function (lightPosition) {
-    var data = {
+    const data = {
       liveDecisionPoints: {},
       decisionPoints: []
     };
 
-    var sequence = 0;
-    var bodies = gameState.getBodies().getBodyArray();
+    let sequence = 0;
+    const bodies = gameState.getBodies().getBodyArray();
     for (let idx = 0; idx !== bodies.length; idx++) {
-      var body = bodies[idx];
-      var points = body.points;
-      var pointData = {
+      const body = bodies[idx];
+      const points = body.points;
+      const pointData = {
         idx: 0
       };
-      var previous = null;
-      var remain = null;
-      var mode = RayCaster.Modes.NOT_STARTED;
+      let previous = null;
+      let remain = null;
+      let mode = RayCaster.Modes.NOT_STARTED;
       do {
-        var point = points[pointData.idx];
-        var dx = point.x - lightPosition.x;
-        var dy = point.y - lightPosition.y;
+        const point = points[pointData.idx];
+        const dx = point.x - lightPosition.x;
+        const dy = point.y - lightPosition.y;
 
         pointData.angle = Math.atan2(dy, dx);
         if (previous != null) {
-          var delta = pointData.angle - previous.angle;
+          let delta = pointData.angle - previous.angle;
           while (delta >= Math.PI) {
             delta -= Math.PI * 2;
           }
@@ -55,7 +55,7 @@ var RayCaster = {
             remain = points.length;
           }
           if (mode !== RayCaster.Modes.NOT_STARTED) {
-            var decisionPoint = {
+            const decisionPoint = {
               angle: previous.angle,
               mode: mode,
               body: body,
@@ -95,7 +95,7 @@ var RayCaster = {
   loadLightPath: function (ctx, lightPosition, data) {
 
     data.decisionPoints.sort(function (a, b) {
-      var result = b.angle - a.angle;
+      let result = b.angle - a.angle;
       if (result == 0) {
         result = a.mode - b.mode;
       }
@@ -123,10 +123,10 @@ var RayCaster = {
     }
     if (closestDecisionPoint != null) {
 
-      var activeDecisionPoint = closestDecisionPoint;
+      let activeDecisionPoint = closestDecisionPoint;
 
       for (let idx = 0; idx !== data.decisionPoints.length; idx++) {
-        var decisionPoint = data.decisionPoints[idx];
+        const decisionPoint = data.decisionPoints[idx];
         delete data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.idx];
         if (decisionPoint.mode !== RayCaster.Modes.ENDS) {
           data.liveDecisionPoints[decisionPoint.sequence + "/" + decisionPoint.nextIdx] = decisionPoint;
@@ -135,15 +135,15 @@ var RayCaster = {
           // Should hook on to new start point?
           var body = decisionPoint.body;
           var bodyPoints = body.points;
-          var position = bodyPoints[decisionPoint.idx];
+          const position = bodyPoints[decisionPoint.idx];
           var dx0 = position.x - lightPosition.x;
           var dy0 = position.y - lightPosition.y;
-          var candidateDistance = dx0 * dx0 + dy0 * dy0;
-          var currentPosition = RayCaster.getCollisionPoint(activeDecisionPoint, lightPosition,
+          const candidateDistance = dx0 * dx0 + dy0 * dy0;
+          const currentPosition = RayCaster.getCollisionPoint(activeDecisionPoint, lightPosition,
               decisionPoint.angle);
           var dx0 = currentPosition.x - lightPosition.x;
           var dy0 = currentPosition.y - lightPosition.y;
-          var currentDistance = dx0 * dx0 + dy0 * dy0;
+          const currentDistance = dx0 * dx0 + dy0 * dy0;
           if (candidateDistance <= currentDistance) {
             ctx.lineTo(currentPosition.x, currentPosition.y);
             activeDecisionPoint = decisionPoint;
@@ -157,7 +157,7 @@ var RayCaster = {
           activeDecisionPoint = decisionPoint;
           var body = decisionPoint.body;
           var bodyPoints = body.points;
-          var point = bodyPoints[decisionPoint.idx];
+          const point = bodyPoints[decisionPoint.idx];
           ctx.lineTo(point.x, point.y);
 
           if (decisionPoint.mode === RayCaster.Modes.ENDS) {
@@ -197,18 +197,18 @@ var RayCaster = {
   },
 
   getCollisionPoint: function (decisionPoint, light, angle) {
-    var body = decisionPoint.body;
-    var bodyPoints = body.points;
-    var a = bodyPoints[decisionPoint.idx];
-    var b = bodyPoints[decisionPoint.nextIdx];
-    var a0 = (a.x - light.x) * Math.sin(angle) - (a.y - light.y) * Math.cos(angle);
-    var b0 = (b.x - light.x) * Math.sin(angle) - (b.y - light.y) * Math.cos(angle);
-    var ab0 = b0 - a0;
-    var t = -a0 / ab0;
+    const body = decisionPoint.body;
+    const bodyPoints = body.points;
+    const a = bodyPoints[decisionPoint.idx];
+    const b = bodyPoints[decisionPoint.nextIdx];
+    const a0 = (a.x - light.x) * Math.sin(angle) - (a.y - light.y) * Math.cos(angle);
+    const b0 = (b.x - light.x) * Math.sin(angle) - (b.y - light.y) * Math.cos(angle);
+    const ab0 = b0 - a0;
+    const t = -a0 / ab0;
     return {
       x: (b.x - a.x) * t + a.x,
       y: (b.y - a.y) * t + a.y
     };
   }
 
-}
+};

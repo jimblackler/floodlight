@@ -1,29 +1,29 @@
-var Bodies = function (gameState) {
-  var done = [];
-  var width = gameState.getWidth();
-  var height = gameState.getHeight();
+const Bodies = function (gameState) {
+  const done = [];
+  const width = gameState.getWidth();
+  const height = gameState.getHeight();
   this.bodyArray = [];
 
   for (let iy = 0; iy !== height + 1; iy++) {
     for (let ix = 0; ix !== width + 1; ix++) {
       if (!done[ix + "/" + iy]) {
         {
-          var body = {
+          const body = {
             points: []
           };
 
-          var x = ix;
-          var y = iy;
-          var px = null;
-          var py = null;
-          var dy = null;
+          let x = ix;
+          let y = iy;
+          let px = null;
+          let py = null;
+          let dy = null;
           do {
             done[x + "/" + y] = true;
             // Scan
-            var nw = gameState.isBlockedXY(x - 1, y - 1);
-            var ne = gameState.isBlockedXY(x, y - 1);
-            var se = gameState.isBlockedXY(x, y);
-            var sw = gameState.isBlockedXY(x - 1, y);
+            const nw = gameState.isBlockedXY(x - 1, y - 1);
+            const ne = gameState.isBlockedXY(x, y - 1);
+            const se = gameState.isBlockedXY(x, y);
+            const sw = gameState.isBlockedXY(x - 1, y);
             if (px != null) {
               dx = x - px;
               dy = y - py;
